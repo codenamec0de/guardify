@@ -69,7 +69,10 @@
 ## 📸 Screenshots
 
 <p align="center">
-  <i>Screenshots coming soon...</i>
+  <img src="loginScreen.png" alt="Guardify Login Screen" width="500"/>
+  <img src="mainMenu.png" alt="Guardify Main Menu" width="500"/>
+  <img src="Audit.png" alt="Guardify Audit.png" width="500"/>
+  <img src="Account.png" alt="Guardify Account" width="500"/>
 </p>
 
 <!-- 
