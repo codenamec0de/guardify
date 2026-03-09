@@ -1,503 +1,233 @@
-[GITHUB_README (1).md](https://github.com/user-attachments/files/23617989/GITHUB_README.1.md)
-# 🛡️ Guardify | App Auditor
+<p align="center">
+  <img src="assets/guardify_logo.png" alt="Guardify Logo" width="200"/>
+</p>
 
-> **Your Apps, Your Control** - An Android permission auditing tool that helps users understand and control what their apps can access.
+<h1 align="center">Guardify</h1>
 
-[![Platform](https://img.shields.io/badge/Platform-Android-green.svg)](https://www.android.com/)
-[![Kotlin](https://img.shields.io/badge/Kotlin-100%25-purple.svg)](https://kotlinlang.org/)
-[![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-UI-blue.svg)](https://developer.android.com/jetpack/compose)
-[![Material 3](https://img.shields.io/badge/Material%203-Design-orange.svg)](https://m3.material.io/)
-[![API](https://img.shields.io/badge/API-24%2B-brightgreen.svg)](https://android-arsenal.com/api?level=24)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+<p align="center">
+  <strong>Your Apps, Your Control.</strong>
+</p>
 
----
+<p align="center">
+  <a href="#features">Features</a> •
+  <a href="#screenshots">Screenshots</a> •
+  <a href="#download">Download</a> •
+  <a href="#installation">Installation</a> •
+  <a href="#tech-stack">Tech Stack</a> •
+  <a href="#license">License</a>
+</p>
 
-## 📋 Table of Contents
-
-- [Overview](#-overview)
-- [Features](#-features)
-- [Screenshots](#-screenshots)
-- [Tech Stack](#-tech-stack)
-- [Installation](#-installation)
-- [Project Structure](#-project-structure)
-- [Getting Started](#-getting-started)
-- [Architecture](#-architecture)
-- [Roadmap](#-roadmap)
-- [Contributing](#-contributing)
-- [Team](#-team)
-- [License](#-license)
+<p align="center">
+  <img src="https://img.shields.io/badge/Platform-Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Platform"/>
+  <img src="https://img.shields.io/badge/Min%20SDK-26-brightgreen?style=for-the-badge" alt="Min SDK"/>
+  <img src="https://img.shields.io/badge/Kotlin-1.9.0-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white" alt="Kotlin"/>
+  <img src="https://img.shields.io/badge/License-MIT-blue?style=for-the-badge" alt="License"/>
+</p>
 
 ---
 
-## 🌟 Overview
+## 📱 About
 
-**Guardify** is an Android application that audits installed apps' permissions, classifies them by risk level, and provides users with actionable insights to enhance their privacy and security. Built with modern Android development tools, Guardify makes permission management accessible to everyone.
-
-### 🎯 Problem Statement
-
-Android apps often request broad permission sets that exceed their actual needs. Most users:
-- Don't understand technical permission names
-- Face "warning fatigue" from too many alerts
-- Lack clear guidance on what actions to take
-- Have no easy way to assess overall device security
-
-### 💡 Our Solution
-
-Guardify bridges this gap by:
-- **Translating** technical permissions into plain language
-- **Classifying** permissions by risk level (High/Medium/Low)
-- **Prioritizing** the most important security issues
-- **Guiding** users with actionable steps
-- **Processing** everything on-device to preserve privacy
-
-### 🏆 Key Differentiators
-
-- ✅ **Standards-Aligned**: Maps to OWASP MASTG and NIST Privacy Framework
-- ✅ **Privacy-First**: On-device processing, no data collection
-- ✅ **User-Friendly**: Clear explanations, not technical jargon
-- ✅ **Actionable**: Direct links to Settings for permission changes
-- ✅ **Open & Auditable**: Transparent risk classification rules
+**Guardify** is a comprehensive privacy guard application for Android that helps users understand and control what permissions their installed apps have access to. In an era where apps often request more permissions than they need, Guardify empowers users to take back control of their privacy.
 
 ---
 
 ## ✨ Features
 
-### Current Implementation (V1)
+### 🔍 **Permission Auditing**
+- Scans all installed apps for granted permissions
+- Categorizes permissions into **Privacy Critical** and **Standard Access**
+- Shows only permissions apps **actually have**, not just what they request
 
-#### 🔐 User Authentication
-- Social login support (Google, Facebook, Email)
-- Modern, secure authentication UI
-- Clean onboarding experience
+### 🎯 **Risk Classification**
+- Automatically classifies apps as **High**, **Medium**, or **Low** risk
+- Risk assessment based on sensitive permission combinations
+- Visual indicators for quick identification
 
-#### 📊 Security Dashboard
-- **Overall Security Score** (0-100 scale)
-- Quick statistics: High/Medium/Low risk app counts
-- Visual risk indicators
-- Quick action buttons for common tasks
+### 🕵️ **Tracker Detection**
+- Integrates with [Exodus Privacy API](https://exodus-privacy.eu.org/)
+- Identifies known trackers embedded in apps
+- Helps you understand which apps are tracking you
 
-#### 📱 App Audit & Management
-- **Search Functionality**: Find apps instantly
-- **Risk Filters**: Filter by High, Medium, or Low risk
-- **App Cards**: Display app name, icon, risk level, permission count, and tracker count
-- **Detailed Reports**: 
-  - Simple Mode: Risk summary with key points
-  - Expert Mode: Detailed permission breakdown
-- **Permission Explanations**: Plain-language descriptions with real-world examples
+### 📊 **Data Usage Monitoring**
+- Track how much data each app consumes
+- View mobile and WiFi usage separately
+- Monitor apps with suspicious network activity
 
-#### 🔔 Smart Alerts
-- Security notifications for high-risk behavior
-- Camera/microphone access alerts
-- New permission additions after updates
-- Color-coded severity indicators (Critical/Warning/Info)
-- Timestamped activity logs
+### 🛡️ **Security Scanning**
+- Animated security scan with progress visualization
+- Comprehensive device audit
+- One-tap security overview
 
-#### ⚙️ Settings & Preferences
-- User profile management
-- Premium features preview
-- Toggle controls:
-  - Push notifications
-  - Auto-scan for new apps
-  - Tracker detection
-- About & support information
-
-### 🎨 Design Features
-
-- **Dark Theme**: Easy on the eyes with vibrant color highlights
-- **Material 3**: Latest Material Design components
-- **Color-Coded Risks**: 
-  - 🔴 High Risk (Red)
-  - 🟠 Medium Risk (Orange)
-  - 🟢 Low Risk (Green)
-- **Smooth Navigation**: Intuitive screen transitions
-- **Responsive Layout**: Adapts to different screen sizes
-- **Accessibility**: WCAG compliant design
+### 🔐 **User Authentication**
+- Secure login with Firebase Authentication
+- Google Sign-In support
+- Password recovery options
 
 ---
 
 ## 📸 Screenshots
 
-### Login & Authentication
-> Clean, modern login screen with social authentication options
+<p align="center">
+  <i>Screenshots coming soon...</i>
+</p>
 
-### Dashboard
-> Security score at a glance with risk statistics and quick actions
+<!-- 
+Uncomment and add your screenshots:
 
-### App List
-> Searchable, filterable list of all installed apps with risk indicators
+<p align="center">
+  <img src="assets/screenshots/login.png" width="200" alt="Login"/>
+  <img src="assets/screenshots/home.png" width="200" alt="Home"/>
+  <img src="assets/screenshots/scan.png" width="200" alt="Scan"/>
+  <img src="assets/screenshots/audit.png" width="200" alt="Audit"/>
+</p>
 
-### App Details
-> Toggle between Simple and Expert modes for permission details
-
-### Alerts
-> Real-time security notifications with color-coded severity
-
-### Settings
-> User preferences and app configuration
-
----
-
-## 🔧 Tech Stack
-
-### Frontend
-- **Language**: [Kotlin](https://kotlinlang.org/) - 100% Kotlin codebase
-- **UI Framework**: [Jetpack Compose](https://developer.android.com/jetpack/compose) - Modern declarative UI
-- **Design System**: [Material 3](https://m3.material.io/) - Latest Material Design
-- **Navigation**: [Navigation Compose](https://developer.android.com/jetpack/compose/navigation)
-
-### Android Components
-- **Min SDK**: API 24 (Android 7.0)
-- **Target SDK**: API 34 (Android 14)
-- **Compile SDK**: API 34
-
-### Libraries & Dependencies
-```gradle
-- Jetpack Compose BOM 2023.08.00
-- Material 3
-- Navigation Compose 2.7.6
-- Material Icons Extended
-- AndroidX Core KTX 1.12.0
-- Activity Compose 1.8.2
-```
-
-### Development Tools
-- **IDE**: Android Studio Hedgehog (2023.1.1+)
-- **Build System**: Gradle (Kotlin DSL)
-- **Version Control**: Git
-
-### Standards & Frameworks
-- **OWASP MASTG**: Mobile App Security Testing Guide
-- **NIST Privacy Framework**: Privacy risk assessment
-- **Android Guidelines**: Human Interface Guidelines compliance
+<p align="center">
+  <img src="assets/screenshots/app_detail.png" width="200" alt="App Detail"/>
+  <img src="assets/screenshots/permissions.png" width="200" alt="Permissions"/>
+  <img src="assets/screenshots/settings.png" width="200" alt="Settings"/>
+</p>
+-->
 
 ---
 
-## 📥 Installation
+## 📥 Download
 
-### Prerequisites
+### Latest Release
 
-Before you begin, ensure you have:
-- **Android Studio** Hedgehog (2023.1.1) or newer
-- **JDK** 8 or higher
-- **Android SDK** with API 34
-- **Git** (for cloning)
+<p align="center">
+  <a href="https://github.com/codenamec0de/guardify/releases/latest">
+    <img src="https://img.shields.io/badge/Download-APK-00C853?style=for-the-badge&logo=android&logoColor=white" alt="Download APK"/>
+  </a>
+  <a href="https://github.com/codenamec0de/guardify/archive/refs/heads/main.zip">
+    <img src="https://img.shields.io/badge/Download-Source-2196F3?style=for-the-badge&logo=github&logoColor=white" alt="Download Source"/>
+  </a>
+</p>
 
-### Option 1: Clone from GitHub
+| Version | Release Date | Download |
+|---------|--------------|----------|
+| v1.0.0  | March 2026   | [APK](https://github.com/codenamec0de/guardify/releases/download/v1.0.0/guardify-v1.0.0.apk) • [Source](https://github.com/codenamec0de/guardify/archive/refs/tags/v1.0.0.zip) |
+
+---
+
+## 🚀 Installation
+
+### Option 1: Install APK Directly
+
+1. Download the latest APK from [Releases](https://github.com/codenamec0de/guardify/releases/latest)
+2. Enable **Install from Unknown Sources** in your device settings
+3. Open the downloaded APK file
+4. Tap **Install**
+
+### Option 2: Build from Source
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/guardify.git
+git clone https://github.com/codenamec0de/guardify.git
 
 # Navigate to project directory
 cd guardify
 
-# Open in Android Studio
-# File → Open → Select the 'guardify' folder
+# Open in Android Studio and sync Gradle
+# Or build via command line:
+./gradlew assembleDebug
 ```
 
-### Option 2: Download ZIP
-
-1. Click the green **Code** button above
-2. Select **Download ZIP**
-3. Extract the ZIP file
-4. Open the folder in Android Studio
-
-### Build & Run
-
-1. **Open Project**
-   - Launch Android Studio
-   - File → Open → Select project folder
-
-2. **Sync Gradle**
-   - Wait for automatic Gradle sync (2-5 minutes)
-   - Click "Sync Now" if prompted
-
-3. **Run the App**
-   - Connect a device or start an emulator
-   - Click the green Run button (▶️)
-   - Select your device
-   - App will install and launch!
-
-### Troubleshooting
-
-**Gradle Sync Failed?**
-```bash
-# Try invalidating caches
-File → Invalidate Caches → Restart
+The APK will be generated at:
+```
+app/build/outputs/apk/debug/app-debug.apk
 ```
 
-**Build Errors?**
-```bash
-# Clean and rebuild
-Build → Clean Project
-Build → Rebuild Project
-```
+---
 
-**Missing SDK?**
-```bash
-# Install required SDK
-Tools → SDK Manager → Install Android 14 (API 34)
-```
+## 🔧 Configuration
+
+### Firebase Setup
+
+1. Create a project in [Firebase Console](https://console.firebase.google.com/)
+2. Add an Android app with package name: `com.uow.guardify`
+3. Download `google-services.json` and place it in the `app/` directory
+4. Enable **Email/Password** and **Google Sign-In** in Firebase Authentication
+
+### Required Permissions
+
+The app requires the following permissions to function:
+
+| Permission | Purpose |
+|------------|---------|
+| `QUERY_ALL_PACKAGES` | Scan installed applications |
+| `INTERNET` | Firebase auth & Exodus API |
+| `PACKAGE_USAGE_STATS` | Data usage monitoring |
+| `READ_SMS` *(optional)* | Scam message detection |
+
+---
+
+## 🛠️ Tech Stack
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Kotlin-7F52FF?style=flat-square&logo=kotlin&logoColor=white" alt="Kotlin"/>
+  <img src="https://img.shields.io/badge/Android%20SDK-34-3DDC84?style=flat-square&logo=android&logoColor=white" alt="Android SDK"/>
+  <img src="https://img.shields.io/badge/Firebase-FFCA28?style=flat-square&logo=firebase&logoColor=black" alt="Firebase"/>
+  <img src="https://img.shields.io/badge/Material%20Design%203-757575?style=flat-square&logo=material-design&logoColor=white" alt="Material Design"/>
+</p>
+
+- **Language:** Kotlin 1.9.0
+- **Min SDK:** 26 (Android 8.0)
+- **Target SDK:** 34 (Android 14)
+- **Architecture:** MVVM with Coroutines
+- **Authentication:** Firebase Auth (Email + Google)
+- **Networking:** Retrofit + OkHttp
+- **UI:** Material Design 3 + Custom Dark Theme
+- **API Integration:** Exodus Privacy API
 
 ---
 
 ## 📁 Project Structure
 
 ```
-guardify/
-├── app/
-│   ├── src/
-│   │   └── main/
-│   │       ├── java/com/guardify/appauditor/
-│   │       │   ├── MainActivity.kt                 # App entry point
-│   │       │   └── ui/
-│   │       │       ├── theme/
-│   │       │       │   ├── Color.kt               # Color palette
-│   │       │       │   ├── Theme.kt               # Material theme
-│   │       │       │   └── Typography.kt          # Text styles
-│   │       │       └── screens/
-│   │       │           ├── LoginScreen.kt         # Authentication
-│   │       │           ├── DashboardScreen.kt     # Main dashboard
-│   │       │           ├── AppListScreen.kt       # App list view
-│   │       │           ├── AppDetailScreen.kt     # App details
-│   │       │           ├── AlertsScreen.kt        # Notifications
-│   │       │           └── SettingsScreen.kt      # Settings
-│   │       ├── res/                               # Resources
-│   │       └── AndroidManifest.xml                # App manifest
-│   └── build.gradle.kts                           # App-level build
-├── build.gradle.kts                               # Project-level build
-├── settings.gradle.kts                            # Gradle settings
-├── gradle.properties                              # Gradle config
-└── README.md                                      # This file
-```
-
-### Key Directories
-
-- **`ui/theme/`**: Design system (colors, typography, theme)
-- **`ui/screens/`**: All app screens (6 screens total)
-- **`res/values/`**: String resources and XML themes
-- **`res/xml/`**: Configuration files (backup, data extraction)
-
----
-
-## 🚀 Getting Started
-
-### For Users
-
-1. **Download** the APK from [Releases](https://github.com/your-username/guardify/releases)
-2. **Install** on your Android device (API 24+)
-3. **Open** the app and log in
-4. **Scan** your installed apps
-5. **Review** risk assessments and take action!
-
-### For Developers
-
-#### Quick Start
-
-```bash
-# Clone repository
-git clone https://github.com/your-username/guardify.git
-cd guardify
-
-# Open in Android Studio
-# File → Open → Select folder
-
-# Wait for Gradle sync
-# Click Run ▶️
-```
-
-#### Run on Emulator
-
-```bash
-# Create emulator via Device Manager
-Tools → Device Manager → Create Device
-
-# Recommended: Pixel 6, API 34
-# Start emulator and run app
-```
-
-#### Run on Physical Device
-
-```bash
-# Enable Developer Options on your phone
-# Enable USB Debugging
-# Connect via USB
-# Trust computer
-# Select device in Android Studio
-# Click Run ▶️
+app/
+├── src/main/
+│   ├── java/com/uow/guardify/
+│   │   ├── adapter/          # RecyclerView adapters
+│   │   ├── api/              # Retrofit API services
+│   │   ├── model/            # Data models
+│   │   ├── ui/               # Fragments (home, audit, alerts, settings)
+│   │   ├── util/             # Helper classes
+│   │   ├── LoginActivity.kt
+│   │   ├── MainActivity.kt
+│   │   ├── ScanActivity.kt
+│   │   ├── AppDetailActivity.kt
+│   │   └── ...
+│   └── res/
+│       ├── layout/           # XML layouts
+│       ├── drawable/         # Vector icons & backgrounds
+│       ├── values/           # Colors, strings, themes
+│       └── anim/             # Transition animations
+└── google-services.json      # Firebase config (add your own)
 ```
 
 ---
 
-## 🏗️ Architecture
+## 🔒 Privacy
 
-### Design Pattern
+Guardify is built with privacy in mind:
 
-Guardify follows **MVVM (Model-View-ViewModel)** architecture principles:
-
-```
-┌─────────────────────────────────────┐
-│            UI Layer                 │
-│  (Jetpack Compose Screens)          │
-└─────────────────────────────────────┘
-                 ↕
-┌─────────────────────────────────────┐
-│         ViewModel Layer             │
-│  (Business Logic & State)           │
-└─────────────────────────────────────┘
-                 ↕
-┌─────────────────────────────────────┐
-│          Data Layer                 │
-│  (Repositories & Data Sources)      │
-└─────────────────────────────────────┘
-```
-
-### Component Breakdown
-
-#### **UI Layer** (Jetpack Compose)
-- 6 screen composables
-- Reusable UI components
-- Material 3 design system
-- Navigation management
-
-#### **Theme Layer**
-- Centralized color definitions
-- Typography system
-- Material theme configuration
-
-#### **Navigation**
-- Type-safe navigation
-- Deep linking support
-- Back stack management
-
-### Data Flow
-
-```
-User Interaction → UI Event → ViewModel → Data Layer → UI Update
-```
-
----
-
-## 🗺️ Roadmap
-
-### ✅ Phase 1: UI Implementation (COMPLETE)
-- [x] Login screen with social auth
-- [x] Dashboard with security score
-- [x] App list with search & filters
-- [x] Detailed app reports (Simple/Expert modes)
-- [x] Alerts & notifications UI
-- [x] Settings & preferences
-- [x] Material 3 dark theme
-- [x] Navigation between screens
-
-### 🚧 Phase 2: Core Functionality (IN PROGRESS)
-- [ ] PackageManager integration
-- [ ] Permission enumeration
-- [ ] Risk classification engine
-- [ ] OWASP MASTG mapping
-- [ ] NIST Privacy Framework alignment
-- [ ] Settings deep-links implementation
-
-### 📅 Phase 3: Advanced Features (PLANNED)
-- [ ] Exodus API integration (tracker detection)
-- [ ] Change detection & alerts
-- [ ] CSV/JSON export functionality
-- [ ] Category baseline comparisons
-- [ ] Privacy coach recommendations
-- [ ] Batch permission operations
-
-### 🔮 Phase 4: Premium Features (FUTURE)
-- [ ] Real-time monitoring
-- [ ] Historical permission tracking
-- [ ] Advanced analytics
-- [ ] Secure cloud backup
-- [ ] Multi-device sync
-- [ ] Custom permission profiles
-
-### 🌍 Phase 5: Expansion (FUTURE)
-- [ ] Multi-language support
-- [ ] Tablet optimization
-- [ ] Wear OS companion app
-- [ ] API for enterprises
-- [ ] Community rule submissions
+- **No data collection** — All scanning happens locally on your device
+- **No tracking** — We don't track your usage or behavior
+- **Open source** — Full transparency in how the app works
+- **Minimal permissions** — We only request what's necessary
 
 ---
 
 ## 🤝 Contributing
 
-We welcome contributions from the community! Here's how you can help:
+Contributions are welcome! Feel free to:
 
-### Ways to Contribute
-
-- 🐛 **Report Bugs**: Submit issues for bugs you find
-- 💡 **Suggest Features**: Share ideas for improvements
-- 📝 **Improve Docs**: Help make documentation clearer
-- 🎨 **Design**: Contribute UI/UX improvements
-- 💻 **Code**: Submit pull requests for features or fixes
-
-### Contribution Guidelines
-
-1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feature/AmazingFeature`)
-3. **Commit** your changes (`git commit -m 'Add some AmazingFeature'`)
-4. **Push** to the branch (`git push origin feature/AmazingFeature`)
-5. **Open** a Pull Request
-
-### Code Standards
-
-- Follow [Kotlin Coding Conventions](https://kotlinlang.org/docs/coding-conventions.html)
-- Use meaningful commit messages
-- Add comments for complex logic
-- Write unit tests for new features
-- Ensure all tests pass before submitting
-- Update documentation as needed
-
-### Development Setup
-
-```bash
-# Fork and clone your fork
-git clone https://github.com/your-username/guardify.git
-
-# Create feature branch
-git checkout -b feature/your-feature-name
-
-# Make changes and test
-# Open in Android Studio → Make changes → Test
-
-# Commit and push
-git add .
-git commit -m "Description of changes"
-git push origin feature/your-feature-name
-
-# Open Pull Request on GitHub
-```
-
-### Code Review Process
-
-1. Submit PR with clear description
-2. Automated checks must pass
-3. Maintainers review code
-4. Address feedback if needed
-5. PR merged once approved!
-
----
-
-## 👥 Team
-
-### Project Members
-
-| Name | Role | GitHub | Email |
-|------|------|--------|-------|
-| **Luca Georgiou** | Project Manager | [@lucageo](https://github.com/lucageo) | luca@example.com |
-| **Cagri Alaf** | Lead Developer | [@cagrialaf](https://github.com/cagrialaf) | cagri@example.com |
-| **Hussain Al Saaid** | UI/UX Developer | [@hussainsaaid](https://github.com/hussainsaaid) | hussain@example.com |
-| **Saira Rahman** | Security Analyst | [@sairarahman](https://github.com/sairarahman) | saira@example.com |
-| **Tamim Draz** | Market Researcher | [@tamimdraz](https://github.com/tamimdraz) | tamim@example.com |
-
-### Supervisor
-
-**Dr. Joonsang Baek**  
-University of Wollongong  
-Email: jbaek@uow.edu.au
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ---
 
@@ -508,7 +238,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ```
 MIT License
 
-Copyright (c) 2024 Guardify Team
+Copyright (c) 2026 Guardify
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -519,85 +249,23 @@ furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
 ```
 
 ---
 
-## 📞 Contact & Support
+## 🙏 Acknowledgements
 
-### Get in Touch
-
-- 📧 **Email**: guardify.team@example.com
-- 🐛 **Issues**: [GitHub Issues](https://github.com/your-username/guardify/issues)
-- 💬 **Discussions**: [GitHub Discussions](https://github.com/your-username/guardify/discussions)
-- 📱 **Twitter**: [@GuardifyApp](https://twitter.com/guardifyapp)
-
-### Documentation
-
-- 📖 [Wiki](https://github.com/your-username/guardify/wiki)
-- 🎓 [Getting Started Guide](docs/GETTING_STARTED.md)
-- 🔧 [API Documentation](docs/API.md)
-- 🎨 [Design Guidelines](docs/DESIGN.md)
-
-### Community
-
-- 💬 Join our [Discord Server](https://discord.gg/guardify)
-- 🌐 Visit our [Website](https://guardify.app)
-- 📺 Watch demos on [YouTube](https://youtube.com/@guardifyapp)
+- [Exodus Privacy](https://exodus-privacy.eu.org/) for tracker detection API
+- [Firebase](https://firebase.google.com/) for authentication services
+- [Material Design](https://m3.material.io/) for design guidelines
 
 ---
 
-## 🙏 Acknowledgments
+<p align="center">
+  <b>Made with ❤️ for privacy</b>
+</p>
 
-Special thanks to:
-
-- **University of Wollongong** - For project support and supervision
-- **OWASP Foundation** - For the Mobile Security Testing Guide
-- **NIST** - For the Privacy Framework
-- **Android Community** - For amazing libraries and tools
-- **All Contributors** - For making this project better!
-
-### Powered By
-
-- [Jetpack Compose](https://developer.android.com/jetpack/compose) - Modern UI toolkit
-- [Material Design](https://material.io/) - Design system
-- [Kotlin](https://kotlinlang.org/) - Programming language
-- [Android Studio](https://developer.android.com/studio) - IDE
-- [Gradle](https://gradle.org/) - Build automation
-
----
-
-## ⭐ Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=your-username/guardify&type=Date)](https://star-history.com/#your-username/guardify&Date)
-
----
-
-## 📊 Project Status
-
-![GitHub Repo stars](https://img.shields.io/github/stars/your-username/guardify?style=social)
-![GitHub forks](https://img.shields.io/github/forks/your-username/guardify?style=social)
-![GitHub watchers](https://img.shields.io/github/watchers/your-username/guardify?style=social)
-![GitHub last commit](https://img.shields.io/github/last-commit/your-username/guardify)
-![GitHub issues](https://img.shields.io/github/issues/your-username/guardify)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/your-username/guardify)
-
----
-
-<div align="center">
-
-### 🛡️ Building a Secure Future - Your Apps, Your Control
-
-Made with ❤️ by the Guardify Team
-
-[⬆ Back to Top](#️-guardify--app-auditor)
-
-</div>
+<p align="center">
+  <a href="https://github.com/codenamec0de/guardify/issues">Report Bug</a> •
+  <a href="https://github.com/codenamec0de/guardify/issues">Request Feature</a>
+</p>
