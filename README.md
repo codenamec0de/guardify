@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/guardify_logo.png" alt="Guardify Logo" width="200"/>
+  <img src="guardify_logo.png" alt="Guardify Logo" width="200"/>
 </p>
 
 <h1 align="center">Guardify</h1>
