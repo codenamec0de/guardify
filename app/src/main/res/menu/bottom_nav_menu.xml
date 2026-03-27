@@ -9,6 +9,10 @@
         android:icon="@drawable/ic_shield_nav"
         android:title="@string/nav_audit" />
     <item
+        android:id="@+id/navigation_monitor"
+        android:icon="@drawable/ic_monitor"
+        android:title="@string/nav_monitor" />
+    <item
         android:id="@+id/navigation_alerts"
         android:icon="@drawable/ic_notifications"
         android:title="@string/nav_alerts" />

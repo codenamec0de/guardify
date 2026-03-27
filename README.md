@@ -80,6 +80,68 @@ A comprehensive mobile security application that helps users audit installed app
 
 ---
 
+### V1.2 — Device Security, Breach Checker & App Integrity
+
+#### 1. **Room Database Migration**
+- Migrated all persistence from JSON/SharedPreferences to Room (SQLite)
+- 6 tables: alerts, monitored_apps, scan_results, device_checks, breach_results, app_settings
+- Type-safe DAOs with coroutine support
+
+#### 2. **Persistent Background Service**
+- Always-on foreground service (`START_STICKY`) with 10-minute scan loop
+- Survives app close — auto-restarts via `BootReceiver` after reboot
+- Battery optimization exemption prompt for uninterrupted protection
+- WorkManager fallback if the service is killed by the OS
+
+#### 3. **Monitor Tab**
+- New bottom navigation tab showing all installed apps sorted by risk
+- Per-app enable/disable toggles for background monitoring
+- Bulk Enable All / Disable All controls
+- Service status indicator (running/stopped)
+- Search filtering across monitored apps
+
+#### 4. **Realistic Scan Overhaul**
+- Replaced fake animation with real parallel batch scanning (8 concurrent coroutines)
+- Live progress: "Scanning: Instagram (23/147)" with smooth animated progress bar
+- 3-phase scan: discover apps → analyze permissions → cache to Room database
+- Auto-populates monitored apps table after scan
+
+#### 5. **Device Security Check**
+- 8-point security audit scoring 0–100:
+  - Screen Lock (20pts), Biometric (15pts), Disk Encryption (15pts), OS Version (15pts)
+  - Developer Options OFF (10pts), USB Debugging OFF (10pts), Unknown Sources OFF (10pts)
+  - Guardify Protection ON (5pts)
+- Grade system: Excellent / Good / Fair / At Risk with color coding
+- Expandable checklist on Home screen with pass/fail per check
+- Results persisted to Room for history tracking
+
+#### 6. **Email Breach Checker (HIBP)**
+- Check any email against the Have I Been Pwned database
+- Shows breach count, severity (HIGH/MEDIUM/LOW), exposed data types
+- Individual breach cards with name, date, description, affected accounts
+- Auto-fills logged-in user's email from Firebase Auth
+- API key saved locally for convenience
+- Results cached in Room database
+
+#### 7. **App Integrity Scanner**
+- Per-app security analysis shown in App Detail screen:
+  - **Debuggable** — detects debug-mode APKs (CRITICAL)
+  - **Cleartext Traffic** — HTTP allowed, vulnerable to MITM (WARNING)
+  - **Backup Extraction** — data extractable via ADB (INFO)
+  - **Test Build** — dev builds on production device (CRITICAL)
+  - **Install Source** — sideloaded vs trusted store (WARNING)
+  - **APK Signature** — missing or multiple signing certs (CRITICAL)
+- Overall status badge: CLEAN / INFO / WARNINGS / ISSUES FOUND
+
+#### 8. **New App Install Alerts**
+- BroadcastReceiver detects `PACKAGE_ADDED` / `PACKAGE_REPLACED`
+- Instantly scans new app's permissions + integrity
+- Auto-adds to monitored apps (enabled if medium/high risk)
+- Sends heads-up notification with risk summary
+- Tap notification to view full app detail
+
+---
+
 ## Setup Instructions
 
 ### Prerequisites
@@ -125,38 +187,55 @@ app/src/main/
 │   ├── adapter/
 │   │   ├── AlertAdapter.kt            # Alert list with unread indicators
 │   │   ├── AppListAdapter.kt          # RecyclerView adapter for app list
+│   │   ├── MonitoredAppAdapter.kt     # Per-app monitoring toggles
 │   │   ├── PermissionAdapter.kt       # Adapter for permission list
 │   │   ├── PermissionGroupAdapter.kt  # Expandable category groups
 │   │   └── TrackerAdapter.kt          # Adapter for tracker list
 │   ├── api/
 │   │   ├── ExodusApiService.kt        # Exodus Privacy API interface
+│   │   ├── HIBPApiService.kt          # Have I Been Pwned API v3
 │   │   └── RetrofitClient.kt          # Retrofit singleton
+│   ├── data/
+│   │   ├── dao/                       # Room DAOs (Alert, MonitoredApp, ScanResult, etc.)
+│   │   ├── entity/                    # Room entities (6 tables)
+│   │   └── GuardifyDatabase.kt        # Room database singleton
 │   ├── model/
 │   │   ├── AppInfo.kt                 # App data model with risk calculation
 │   │   ├── PermissionAlert.kt         # Background usage alert model
 │   │   ├── PermissionGroup.kt         # Category grouping model
 │   │   └── TrackerInfo.kt             # Tracker data models
+│   ├── receiver/
+│   │   ├── AppInstallReceiver.kt      # New app install detection + alerts
+│   │   └── BootReceiver.kt            # Restart service on device reboot
 │   ├── service/
+│   │   ├── GuardifyMonitorService.kt  # Always-on foreground monitoring service
 │   │   └── TestDataUsageService.kt    # Foreground service for detection test
 │   ├── ui/
-│   │   ├── home/HomeFragment.kt       # Home dashboard
+│   │   ├── home/HomeFragment.kt       # Dashboard + device security score
 │   │   ├── audit/AuditFragment.kt     # App audit with By App / By Category toggle
+│   │   ├── monitor/MonitorFragment.kt # Per-app monitoring toggles
 │   │   ├── alerts/AlertsFragment.kt   # Background usage alerts
 │   │   └── settings/SettingsFragment.kt
 │   ├── util/
-│   │   ├── AlertStorage.kt            # JSON-based alert persistence
-│   │   ├── AppScanner.kt              # Scans installed apps (dangerous-only)
+│   │   ├── AlertStorage.kt            # Room-backed alert persistence
+│   │   ├── AppIntegrityChecker.kt     # Per-app security/tampering analysis
+│   │   ├── AppScanner.kt              # Parallel batch app scanner
 │   │   ├── BackgroundUsageMonitor.kt  # Core background detection engine
-│   │   ├── DataUsageHelper.kt         # Usage Stats permission helper
+│   │   ├── BatteryOptimizationHelper.kt # Battery exemption utilities
+│   │   ├── BreachChecker.kt           # HIBP email breach checker
+│   │   ├── DataUsageHelper.kt         # Network stats helper
+│   │   ├── DeviceSecurityChecker.kt   # 8-point device security audit
 │   │   ├── PermissionHelper.kt        # Permission metadata (exact lookup maps)
-│   │   ├── PermissionMonitorWorker.kt # WorkManager periodic scanner
-│   │   ├── PreferencesManager.kt      # SharedPreferences manager
+│   │   ├── PreferencesManager.kt      # Room + SharedPreferences manager
 │   │   └── TrackerRepository.kt       # Exodus API handler
+│   ├── worker/
+│   │   └── PermissionMonitorWorker.kt # WorkManager periodic fallback scanner
 │   ├── LoginActivity.kt
 │   ├── OnboardingActivity.kt
 │   ├── SplashActivity.kt
 │   ├── MainActivity.kt
 │   ├── AppDetailActivity.kt
+│   ├── BreachCheckerActivity.kt
 │   └── ScanActivity.kt
 └── res/
     ├── layout/
@@ -175,9 +254,13 @@ app/src/main/
 | `ACCESS_NETWORK_STATE` | Check connectivity |
 | `QUERY_ALL_PACKAGES` | List all installed apps |
 | `PACKAGE_USAGE_STATS` | Detect background app activity & data usage |
-| `FOREGROUND_SERVICE` | Run background detection test service |
+| `FOREGROUND_SERVICE` | Persistent background monitoring service |
 | `FOREGROUND_SERVICE_DATA_SYNC` | Android 14+ foreground service type |
-| `POST_NOTIFICATIONS` | Show test service progress (Android 13+) |
+| `FOREGROUND_SERVICE_SPECIAL_USE` | Security monitoring service type |
+| `POST_NOTIFICATIONS` | Alert notifications (Android 13+) |
+| `RECEIVE_BOOT_COMPLETED` | Restart monitoring after device reboot |
+| `WAKE_LOCK` | Keep CPU alive during background scans |
+| `REQUEST_IGNORE_BATTERY_OPTIMIZATIONS` | Exempt from Doze for continuous protection |
 | `READ_SMS` (optional) | Scan messages for scam links |
 | `RECEIVE_SMS` (optional) | Monitor incoming messages |
 
@@ -236,9 +319,9 @@ Dark theme design:
 
 - [ ] SMS scam detection with ML
 - [ ] Network traffic analysis
-- [ ] Push notifications for security alerts
-- [ ] Export security reports
-- [ ] Real-time permission change detection
+- [ ] Security score history & trend graphs
+- [ ] Export PDF security reports
+- [ ] VPN-based network monitor
 
 ---
 

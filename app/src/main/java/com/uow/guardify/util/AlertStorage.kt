@@ -1,99 +1,91 @@
 package com.uow.guardify.util
 
 import android.content.Context
+import com.uow.guardify.data.GuardifyDatabase
+import com.uow.guardify.data.entity.AlertEntity
+import com.uow.guardify.data.entity.AppSettingsEntity
 import com.uow.guardify.model.PermissionAlert
-import org.json.JSONArray
-import org.json.JSONObject
+import kotlinx.coroutines.runBlocking
 
 /**
- * SharedPreferences-based storage for permission alerts.
- * Stores alerts as a JSON array, capped at [MAX_ALERTS].
+ * Alert storage backed by Room database.
+ * Public API is kept synchronous (via runBlocking) so existing callers
+ * don't need changes. Background callers (workers, services) should
+ * prefer the suspend functions from AlertDao directly.
  */
 object AlertStorage {
 
-    private const val PREFS_NAME = "guardify_alerts"
-    private const val KEY_ALERTS = "alerts_json"
     private const val KEY_LAST_CHECK_TIME = "last_check_time"
     private const val MAX_ALERTS = 100
 
-    private fun getPrefs(context: Context) =
-        context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    private fun db(context: Context) = GuardifyDatabase.getInstance(context)
 
-    fun getLastCheckTime(context: Context): Long =
-        getPrefs(context).getLong(KEY_LAST_CHECK_TIME, 0L)
-
-    fun setLastCheckTime(context: Context, time: Long) {
-        getPrefs(context).edit().putLong(KEY_LAST_CHECK_TIME, time).apply()
+    fun getLastCheckTime(context: Context): Long = runBlocking {
+        db(context).appSettingsDao().get(KEY_LAST_CHECK_TIME)?.toLongOrNull() ?: 0L
     }
 
-    fun getAlerts(context: Context): List<PermissionAlert> {
-        val json = getPrefs(context).getString(KEY_ALERTS, null) ?: return emptyList()
-        return try {
-            val array = JSONArray(json)
-            (0 until array.length()).map { i -> fromJson(array.getJSONObject(i)) }
-        } catch (e: Exception) {
-            emptyList()
+    fun setLastCheckTime(context: Context, time: Long) = runBlocking {
+        db(context).appSettingsDao().set(AppSettingsEntity(KEY_LAST_CHECK_TIME, time.toString()))
+    }
+
+    fun getAlerts(context: Context): List<PermissionAlert> = runBlocking {
+        db(context).alertDao().getAll().map { it.toModel() }
+    }
+
+    fun addAlert(context: Context, alert: PermissionAlert) = runBlocking {
+        val dao = db(context).alertDao()
+        dao.insert(alert.toEntity())
+        trimIfNeeded(dao)
+    }
+
+    fun addAlerts(context: Context, newAlerts: List<PermissionAlert>) = runBlocking {
+        val dao = db(context).alertDao()
+        dao.insertAll(newAlerts.map { it.toEntity() })
+        trimIfNeeded(dao)
+    }
+
+    fun markAsRead(context: Context, alertId: String) = runBlocking {
+        db(context).alertDao().markAsRead(alertId)
+    }
+
+    fun clearAlerts(context: Context) = runBlocking {
+        db(context).alertDao().clearAll()
+    }
+
+    fun getUnreadCount(context: Context): Int = runBlocking {
+        db(context).alertDao().getUnreadCount()
+    }
+
+    private suspend fun trimIfNeeded(dao: com.uow.guardify.data.dao.AlertDao) {
+        val count = dao.getCount()
+        if (count > MAX_ALERTS) {
+            dao.deleteOldest(count - MAX_ALERTS)
         }
     }
 
-    fun addAlert(context: Context, alert: PermissionAlert) {
-        val alerts = getAlerts(context).toMutableList()
-        alerts.add(0, alert) // newest first
-        // Cap at MAX_ALERTS
-        val capped = if (alerts.size > MAX_ALERTS) alerts.take(MAX_ALERTS) else alerts
-        saveAlerts(context, capped)
-    }
+    // -------------------------------------------------------------------------
+    // Entity <-> Model mapping
+    // -------------------------------------------------------------------------
 
-    fun addAlerts(context: Context, newAlerts: List<PermissionAlert>) {
-        val alerts = getAlerts(context).toMutableList()
-        alerts.addAll(0, newAlerts)
-        val capped = if (alerts.size > MAX_ALERTS) alerts.take(MAX_ALERTS) else alerts
-        saveAlerts(context, capped)
-    }
+    private fun AlertEntity.toModel() = PermissionAlert(
+        id = id,
+        packageName = packageName,
+        appName = appName,
+        permissions = permissions.split(",").filter { it.isNotEmpty() },
+        dataUsedBytes = dataUsedBytes,
+        backgroundDurationMs = backgroundDurationMs,
+        timestamp = timestamp,
+        isRead = isRead
+    )
 
-    fun markAsRead(context: Context, alertId: String) {
-        val alerts = getAlerts(context).map {
-            if (it.id == alertId) it.copy(isRead = true) else it
-        }
-        saveAlerts(context, alerts)
-    }
-
-    fun clearAlerts(context: Context) {
-        getPrefs(context).edit().remove(KEY_ALERTS).apply()
-    }
-
-    fun getUnreadCount(context: Context): Int =
-        getAlerts(context).count { !it.isRead }
-
-    private fun saveAlerts(context: Context, alerts: List<PermissionAlert>) {
-        val array = JSONArray()
-        alerts.forEach { array.put(toJson(it)) }
-        getPrefs(context).edit().putString(KEY_ALERTS, array.toString()).apply()
-    }
-
-    private fun toJson(alert: PermissionAlert): JSONObject = JSONObject().apply {
-        put("id", alert.id)
-        put("packageName", alert.packageName)
-        put("appName", alert.appName)
-        put("permissions", JSONArray(alert.permissions))
-        put("dataUsedBytes", alert.dataUsedBytes)
-        put("backgroundDurationMs", alert.backgroundDurationMs)
-        put("timestamp", alert.timestamp)
-        put("isRead", alert.isRead)
-    }
-
-    private fun fromJson(obj: JSONObject): PermissionAlert {
-        val permsArray = obj.getJSONArray("permissions")
-        val permissions = (0 until permsArray.length()).map { permsArray.getString(it) }
-        return PermissionAlert(
-            id = obj.getString("id"),
-            packageName = obj.getString("packageName"),
-            appName = obj.getString("appName"),
-            permissions = permissions,
-            dataUsedBytes = obj.getLong("dataUsedBytes"),
-            backgroundDurationMs = obj.getLong("backgroundDurationMs"),
-            timestamp = obj.getLong("timestamp"),
-            isRead = obj.optBoolean("isRead", false)
-        )
-    }
+    private fun PermissionAlert.toEntity() = AlertEntity(
+        id = id,
+        packageName = packageName,
+        appName = appName,
+        permissions = permissions.joinToString(","),
+        dataUsedBytes = dataUsedBytes,
+        backgroundDurationMs = backgroundDurationMs,
+        timestamp = timestamp,
+        isRead = isRead
+    )
 }

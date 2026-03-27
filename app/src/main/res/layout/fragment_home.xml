@@ -196,6 +196,125 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
+            <!-- Device Security Card -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardDeviceSecurity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:cardBackgroundColor="@color/card_dark"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <!-- Header row: icon + title + score circle -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:background="@drawable/bg_score_circle_blue"
+                            android:padding="7dp"
+                            android:src="@drawable/ic_security"
+                            android:contentDescription="Security" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Device Security"
+                                android:textColor="@color/text_primary_dark"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvSecurityGrade"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="Checking..."
+                                android:textColor="@color/text_secondary_dark"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                        <!-- Score circle -->
+                        <FrameLayout
+                            android:layout_width="56dp"
+                            android:layout_height="56dp">
+
+                            <ProgressBar
+                                android:id="@+id/progressSecurity"
+                                style="?android:attr/progressBarStyleHorizontal"
+                                android:layout_width="56dp"
+                                android:layout_height="56dp"
+                                android:layout_gravity="center"
+                                android:max="100"
+                                android:progress="0"
+                                android:progressDrawable="@drawable/bg_score_circle_green"
+                                android:indeterminate="false" />
+
+                            <TextView
+                                android:id="@+id/tvSecurityScore"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="--"
+                                android:textColor="@color/text_primary_dark"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                        </FrameLayout>
+
+                    </LinearLayout>
+
+                    <!-- Passed count -->
+                    <TextView
+                        android:id="@+id/tvSecurityPassed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:textColor="@color/text_secondary_dark"
+                        android:textSize="12sp" />
+
+                    <!-- Expandable checklist -->
+                    <LinearLayout
+                        android:id="@+id/securityChecklist"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="vertical"
+                        android:visibility="gone" />
+
+                    <!-- Toggle expand -->
+                    <TextView
+                        android:id="@+id/tvToggleChecklist"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="Show details"
+                        android:textColor="@color/primary"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
             <!-- Quick Actions -->
             <TextView
                 android:layout_width="wrap_content"
@@ -245,6 +364,59 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:text="See permissions for all installed apps"
+                        android:textColor="@color/text_secondary_dark"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_arrow_forward"
+                    android:alpha="0.5"
+                    android:contentDescription="Go" />
+
+            </LinearLayout>
+
+            <!-- Breach Checker -->
+            <LinearLayout
+                android:id="@+id/btnBreachChecker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_app_item"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/bg_score_circle_red"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_security"
+                    android:contentDescription="Breach" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Breach Checker"
+                        android:textColor="@color/text_primary_dark"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="Check if your email was in a data breach"
                         android:textColor="@color/text_secondary_dark"
                         android:textSize="12sp" />
 

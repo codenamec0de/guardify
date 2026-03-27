@@ -10,8 +10,12 @@ import com.uow.guardify.model.AppInfo
 import com.uow.guardify.model.RiskLevel
 
 object AppScanner {
-    
-    fun scanInstalledApps(context: Context, includeSystemApps: Boolean = false): List<AppInfo> {
+
+    /**
+     * Returns the raw list of non-system PackageInfo objects.
+     * Used by ScanActivity for batched parallel scanning.
+     */
+    fun getInstalledPackages(context: Context, includeSystemApps: Boolean = false): List<PackageInfo> {
         val packageManager = context.packageManager
         val packages = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             packageManager.getInstalledPackages(
@@ -21,25 +25,38 @@ object AppScanner {
             @Suppress("DEPRECATION")
             packageManager.getInstalledPackages(PackageManager.GET_PERMISSIONS)
         }
-        
+
+        return packages.filter { packageInfo ->
+            if (includeSystemApps) true
+            else (packageInfo.applicationInfo?.flags?.and(ApplicationInfo.FLAG_SYSTEM) ?: 0) == 0
+        }
+    }
+
+    /**
+     * Scans a single package and returns an AppInfo, or null on failure.
+     * Used by ScanActivity for parallel batch processing.
+     */
+    fun scanSinglePackage(context: Context, packageInfo: PackageInfo): AppInfo? {
+        return try {
+            createAppInfo(context.packageManager, packageInfo)
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    fun scanInstalledApps(context: Context, includeSystemApps: Boolean = false): List<AppInfo> {
+        val packages = getInstalledPackages(context, includeSystemApps)
+
         return packages
-            .filter { packageInfo ->
-                if (includeSystemApps) {
-                    true
-                } else {
-                    // Filter out system apps
-                    (packageInfo.applicationInfo?.flags?.and(ApplicationInfo.FLAG_SYSTEM) ?: 0) == 0
-                }
-            }
             .mapNotNull { packageInfo ->
                 try {
-                    createAppInfo(packageManager, packageInfo)
+                    createAppInfo(context.packageManager, packageInfo)
                 } catch (e: Exception) {
                     null
                 }
             }
             // Sort by sensitive permission count (most first), then by risk level
-            .sortedWith(compareByDescending<AppInfo> { 
+            .sortedWith(compareByDescending<AppInfo> {
                 it.permissions.count { perm -> perm in AppInfo.SENSITIVE_PERMISSIONS }
             }.thenByDescending { it.riskLevel.ordinal })
     }

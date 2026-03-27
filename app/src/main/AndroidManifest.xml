@@ -18,10 +18,20 @@
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
 
-    <!-- For background test service -->
+    <!-- For foreground services -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- Restart monitoring service after reboot -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- Keep CPU alive during background scans -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- Request battery optimization exemption -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
     <application
         android:allowBackup="true"
@@ -76,11 +86,47 @@
             android:exported="false"
             android:theme="@style/Theme.Guardify" />
 
+        <!-- Breach Checker Activity -->
+        <activity
+            android:name=".BreachCheckerActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Guardify" />
+
+        <!-- Persistent monitoring service -->
+        <service
+            android:name=".service.GuardifyMonitorService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Security monitoring — scans background app data usage to protect user privacy" />
+        </service>
+
         <!-- Test data usage service -->
         <service
             android:name=".service.TestDataUsageService"
             android:exported="false"
             android:foregroundServiceType="dataSync" />
+
+        <!-- Restart monitoring after device reboot -->
+        <receiver
+            android:name=".receiver.BootReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Detect new app installs and updates -->
+        <receiver
+            android:name=".receiver.AppInstallReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
 
     </application>
 

@@ -25,6 +25,7 @@ import com.uow.guardify.adapter.PermissionAdapter
 import com.uow.guardify.adapter.TrackerAdapter
 import com.uow.guardify.model.AppInfo
 import com.uow.guardify.model.RiskLevel
+import com.uow.guardify.util.AppIntegrityChecker
 import com.uow.guardify.util.AppScanner
 import com.uow.guardify.util.DataUsageHelper
 import com.uow.guardify.util.PermissionHelper
@@ -61,6 +62,11 @@ class AppDetailActivity : AppCompatActivity() {
     private lateinit var rvStandardAccess: RecyclerView
     private lateinit var btnSensitiveInfo: ImageButton
     
+    // Integrity
+    private lateinit var tvIntegrityStatus: TextView
+    private lateinit var progressIntegrity: ProgressBar
+    private lateinit var integrityChecklist: LinearLayout
+
     // Trackers
     private lateinit var tvTrackerStatus: TextView
     private lateinit var progressTrackers: ProgressBar
@@ -83,6 +89,7 @@ class AppDetailActivity : AppCompatActivity() {
         setupListeners()
         loadAppDetails()
         loadDataUsage()
+        loadIntegrity()
         loadTrackers()
     }
 
@@ -108,6 +115,10 @@ class AppDetailActivity : AppCompatActivity() {
         rvStandardAccess = findViewById(R.id.rvStandardAccess)
         btnSensitiveInfo = findViewById(R.id.btnSensitiveInfo)
         
+        tvIntegrityStatus = findViewById(R.id.tvIntegrityStatus)
+        progressIntegrity = findViewById(R.id.progressIntegrity)
+        integrityChecklist = findViewById(R.id.integrityChecklist)
+
         tvTrackerStatus = findViewById(R.id.tvTrackerStatus)
         progressTrackers = findViewById(R.id.progressTrackers)
         rvTrackers = findViewById(R.id.rvTrackers)
@@ -333,6 +344,86 @@ class AppDetailActivity : AppCompatActivity() {
                 } ?: run {
                     tvDataUsage.text = "--"
                 }
+            }
+        }
+    }
+
+    private fun loadIntegrity() {
+        progressIntegrity.visibility = View.VISIBLE
+        integrityChecklist.removeAllViews()
+
+        lifecycleScope.launch {
+            val result = withContext(Dispatchers.IO) {
+                AppIntegrityChecker.check(this@AppDetailActivity, packageName)
+            }
+
+            progressIntegrity.visibility = View.GONE
+
+            // Status badge
+            when (result.overallStatus) {
+                AppIntegrityChecker.Status.CRITICAL -> {
+                    tvIntegrityStatus.text = "ISSUES FOUND"
+                    tvIntegrityStatus.setTextColor(getColor(R.color.risk_high))
+                    tvIntegrityStatus.setBackgroundResource(R.drawable.bg_badge_high)
+                }
+                AppIntegrityChecker.Status.WARNING -> {
+                    tvIntegrityStatus.text = "WARNINGS"
+                    tvIntegrityStatus.setTextColor(getColor(R.color.risk_medium))
+                    tvIntegrityStatus.setBackgroundResource(R.drawable.bg_badge_medium)
+                }
+                AppIntegrityChecker.Status.INFO -> {
+                    tvIntegrityStatus.text = "INFO"
+                    tvIntegrityStatus.setTextColor(getColor(R.color.text_secondary_dark))
+                    tvIntegrityStatus.setBackgroundResource(R.drawable.bg_badge_low)
+                }
+                AppIntegrityChecker.Status.CLEAN -> {
+                    tvIntegrityStatus.text = "CLEAN"
+                    tvIntegrityStatus.setTextColor(getColor(R.color.risk_low))
+                    tvIntegrityStatus.setBackgroundResource(R.drawable.bg_badge_low)
+                }
+            }
+
+            // Populate checklist
+            for (check in result.checks) {
+                val itemView = layoutInflater.inflate(
+                    R.layout.item_integrity_check, integrityChecklist, false
+                )
+
+                val ivIcon = itemView.findViewById<ImageView>(R.id.ivStatusIcon)
+                val tvName = itemView.findViewById<TextView>(R.id.tvCheckName)
+                val tvDetail = itemView.findViewById<TextView>(R.id.tvCheckDetail)
+                val tvSeverity = itemView.findViewById<TextView>(R.id.tvSeverity)
+
+                ivIcon.setImageResource(
+                    if (check.passed) R.drawable.ic_check_circle else R.drawable.ic_warning_circle
+                )
+                tvName.text = check.name
+                tvDetail.text = check.detail
+
+                if (check.passed) {
+                    tvSeverity.visibility = View.GONE
+                } else {
+                    tvSeverity.visibility = View.VISIBLE
+                    when (check.severity) {
+                        AppIntegrityChecker.Severity.CRITICAL -> {
+                            tvSeverity.text = "CRITICAL"
+                            tvSeverity.setTextColor(getColor(R.color.risk_high))
+                            tvSeverity.setBackgroundResource(R.drawable.bg_badge_high)
+                        }
+                        AppIntegrityChecker.Severity.WARNING -> {
+                            tvSeverity.text = "WARNING"
+                            tvSeverity.setTextColor(getColor(R.color.risk_medium))
+                            tvSeverity.setBackgroundResource(R.drawable.bg_badge_medium)
+                        }
+                        AppIntegrityChecker.Severity.INFO -> {
+                            tvSeverity.text = "INFO"
+                            tvSeverity.setTextColor(getColor(R.color.text_secondary_dark))
+                            tvSeverity.setBackgroundResource(R.drawable.bg_badge_low)
+                        }
+                    }
+                }
+
+                integrityChecklist.addView(itemView)
             }
         }
     }

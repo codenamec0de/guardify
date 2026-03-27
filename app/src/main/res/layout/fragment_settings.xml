@@ -174,7 +174,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="24dp"
-            android:text="Guardify v1.0"
+            android:text="Guardify v1.2"
             android:textColor="@color/text_hint"
             android:textSize="12sp" />
 
