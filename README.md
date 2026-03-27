@@ -244,7 +244,9 @@ Dark theme design:
 
 ## License
 
-This project is for educational purposes as part of a graduation project.
+Copyright (c) 2026 codenamec0de. **All Rights Reserved.**
+
+This source code is viewable for academic and portfolio purposes only. No copying, modification, or distribution is permitted without written permission. See [LICENSE](LICENSE) for details.
 
 ---
 
