@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/bg_app_item"
+    android:padding="16dp">
+
+    <!-- Unread indicator dot -->
+    <View
+        android:id="@+id/indicatorUnread"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:background="@drawable/bg_risk_high"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- App icon -->
+    <ImageView
+        android:id="@+id/ivAlertAppIcon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="12dp"
+        android:contentDescription="App Icon"
+        app:layout_constraintStart_toEndOf="@id/indicatorUnread"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- App name -->
+    <TextView
+        android:id="@+id/tvAlertTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/text_primary_dark"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/tvAlertDataBadge"
+        app:layout_constraintStart_toEndOf="@id/ivAlertAppIcon"
+        app:layout_constraintTop_toTopOf="@id/ivAlertAppIcon" />
+
+    <!-- Data usage badge -->
+    <TextView
+        android:id="@+id/tvAlertDataBadge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_risk_high"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="4dp"
+        android:textColor="@color/risk_high"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Relative timestamp -->
+    <TextView
+        android:id="@+id/tvAlertTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:textColor="@color/text_secondary_dark"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="@id/ivAlertAppIcon"
+        app:layout_constraintStart_toEndOf="@id/ivAlertAppIcon" />
+
+    <!-- Alert message -->
+    <TextView
+        android:id="@+id/tvAlertMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:lineSpacingExtra="3dp"
+        android:textColor="@color/text_secondary_dark"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/ivAlertAppIcon"
+        app:layout_constraintTop_toBottomOf="@id/ivAlertAppIcon" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

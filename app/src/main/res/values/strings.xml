@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Guardify</string>
+    <string name="app_tagline">Your Apps, Your Control.</string>
+    
+    <!-- Login -->
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="dont_have_account">Don\'t have an account?</string>
+    <string name="email">Email</string>
+    <string name="email_hint">john.smith@gmail.com</string>
+    <string name="password">Password</string>
+    <string name="password_hint">Enter your password</string>
+    <string name="remember_me">Remember me</string>
+    <string name="forgot_password">Forgot Password ?</string>
+    <string name="or">Or</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="continue_with_facebook">Continue with Facebook</string>
+    
+    <!-- Onboarding -->
+    <string name="onboarding_title">Your Personal</string>
+    <string name="onboarding_title_highlight">Privacy Guard</string>
+    <string name="get_started">Get Started</string>
+    <string name="terms_agreement">By continuing, you agree to our Terms &amp; Privacy Policy</string>
+    
+    <!-- Permissions -->
+    <string name="permission_apps_title">Permissions Audit</string>
+    <string name="permission_apps_desc">Detect and analyze invasive app permissions instantly.</string>
+    <string name="permission_sms_title">Scam Shield</string>
+    <string name="permission_sms_desc">Block scam messages and phishing attempts automatically.</string>
+    <string name="permission_usage_title">Data Usage Monitor</string>
+    <string name="permission_usage_desc">Track how much data each app consumes on your device.</string>
+    <string name="grant_permissions">Grant Permissions</string>
+    <string name="skip_for_now">Skip for now</string>
+    
+    <!-- Permission Categories -->
+    <string name="privacy_critical">Privacy Critical</string>
+    <string name="standard_access">Standard Access</string>
+    
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_audit">Audit</string>
+    <string name="nav_alerts">Alerts</string>
+    <string name="nav_settings">Settings</string>
+    
+    <!-- Home -->
+    <string name="security_scan">Security Scan</string>
+    <string name="scan_device">Scan Device</string>
+    <string name="scanning_device">Scanning Device…</string>
+    <string name="scan_complete">Scan Complete</string>
+    <string name="apps_scanned">%d apps scanned</string>
+    <string name="estimated_time">Estimated time remaining: %s</string>
+    <string name="cancel_scan">Cancel Scan</string>
+    
+    <!-- Audit -->
+    <string name="app_audit">App Audit</string>
+    <string name="search_apps">Search for apps</string>
+    <string name="all">All</string>
+    <string name="high_risk">High Risk</string>
+    <string name="medium_risk">Medium Risk</string>
+    <string name="low_risk">Low Risk</string>
+    <string name="high_count">High (%d)</string>
+    <string name="medium_count">Medium (%d)</string>
+    <string name="low_count">Low (%d)</string>
+    
+    <!-- App Detail -->
+    <string name="permissions">Permissions</string>
+    <string name="trackers">Trackers</string>
+    <string name="app_info">App Info</string>
+    <string name="open_settings">Open App Settings</string>
+    <string name="manage_permissions">Manage Permissions</string>
+    <string name="uninstall">Uninstall</string>
+    <string name="version">Version</string>
+    <string name="package_name">Package Name</string>
+    <string name="installed_date">Installed</string>
+    <string name="last_updated">Last Updated</string>
+    <string name="no_trackers">No trackers detected</string>
+    <string name="loading_trackers">Loading tracker information…</string>
+    <string name="tracker_error">Could not load tracker info</string>
+    
+    <!-- Scan Status -->
+    <string name="status_completed">Completed</string>
+    <string name="status_scanning">Scanning…</string>
+    <string name="status_pending">Pending</string>
+    <string name="status_analyzing">Analyzing…</string>
+    <string name="status_completing">Completing…</string>
+    <string name="view_results">View Results</string>
+    
+    <!-- Scan Steps -->
+    <string name="scan_sms">SMS Database Check</string>
+    <string name="scan_sms_desc">No malicious links found in recent messages.</string>
+    <string name="scan_permissions">App Permissions</string>
+    <string name="scan_network">Network Security</string>
+    <string name="scan_malware">Malware Heuristic</string>
+    <string name="waiting_to_start">Waiting to start…</string>
+    
+    <!-- Settings -->
+    <string name="settings">Settings</string>
+    <string name="account">Account</string>
+    <string name="logout">Logout</string>
+    <string name="about">About</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="terms_of_service">Terms of Service</string>
+    
+    <!-- Alerts -->
+    <string name="alerts">Alerts</string>
+    <string name="no_alerts">No alerts at this time</string>
+    <string name="alerts_desc">Security alerts will appear here</string>
+    <string name="alerts_monitoring_desc">Background permission usage alerts will appear here as apps are detected</string>
+    <string name="clear_all">Clear all</string>
+    
+    <!-- General -->
+    <string name="loading">Loading…</string>
+    <string name="error">Error</string>
+    <string name="retry">Retry</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+</resources>

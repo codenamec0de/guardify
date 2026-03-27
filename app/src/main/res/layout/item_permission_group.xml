@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="20dp"
+    android:layout_marginBottom="12dp"
+    android:orientation="vertical"
+    android:background="@drawable/bg_app_item">
+
+    <!-- Group header (clickable to expand/collapse) -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/groupHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- Category icon -->
+        <ImageView
+            android:id="@+id/ivGroupIcon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:contentDescription="Category icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <!-- Category name -->
+        <TextView
+            android:id="@+id/tvGroupName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/text_primary_dark"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/tvGroupSubtitle"
+            app:layout_constraintEnd_toStartOf="@id/tvAppCount"
+            app:layout_constraintStart_toEndOf="@id/ivGroupIcon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <!-- Subtitle showing which permissions are in this group -->
+        <TextView
+            android:id="@+id/tvGroupSubtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/text_secondary_dark"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvAppCount"
+            app:layout_constraintStart_toEndOf="@id/ivGroupIcon"
+            app:layout_constraintTop_toBottomOf="@id/tvGroupName" />
+
+        <!-- App count badge -->
+        <TextView
+            android:id="@+id/tvAppCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_chip_selected"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="4dp"
+            android:textColor="@color/text_primary_dark"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ivExpand"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Expand/collapse arrow -->
+        <ImageView
+            android:id="@+id/ivExpand"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_arrow_down"
+            android:contentDescription="Expand"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Expanded app list container -->
+    <LinearLayout
+        android:id="@+id/appListContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="4dp"
+        android:visibility="gone" />
+
+</LinearLayout>
